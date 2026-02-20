@@ -1,3 +1,5 @@
+// static\js\firebaseConfig.js
+
 const firebaseConfig = {
   apiKey: "AIzaSyCj1rPEQ3rv1f2C6IHwfhva-5QFCZnDuhs",
   authDomain: "projeto-flask-crud-de4eb.firebaseapp.com",
