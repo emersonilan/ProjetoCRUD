@@ -8,6 +8,7 @@ from config import APP
 # Importa as blueprints
 from pages.home import home_bp
 from pages.about import about_bp
+from pages.about import contacts_bp
 
 app = Flask(__name__)
 
@@ -22,6 +23,7 @@ def inject_globals():
 # Registra as blueprints
 app.register_blueprint(home_bp)
 app.register_blueprint(about_bp)
+app.register_blueprint(contacts.bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
