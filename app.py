@@ -8,7 +8,7 @@ from config import APP
 # Importa as blueprints
 from pages.home import home_bp
 from pages.about import about_bp
-from pages.about import contacts_bp
+from pages.contacts import contacts_bp
 
 app = Flask(__name__)
 

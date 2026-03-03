@@ -9,3 +9,8 @@ contacts_bp = Blueprint("contacts", __name__)
 def contacts_page(): 
     page_title = "Faça contato"
     return render_template("contacts.html", page_title=page_title)
+
+@contacts_bp.route("/privacy")
+def privacy_page():
+    page_title = "Políticas de Privacidade"
+    return render_template("privacy.html", page_title=page_title)
