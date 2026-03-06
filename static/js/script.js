@@ -31,7 +31,7 @@ const userClickId = 'userInOutLink';
  */
 // const apiLoginEndpoint = 'firebase';
 // const apiLoginEndpoint = '/owner/login'; // Exemplo
-const apiLoginEndpoint = '';
+const apiLoginEndpoint = '/owner/login';
 
 /** 
  * Configuração: rota de logout
@@ -43,7 +43,7 @@ const apiLoginEndpoint = '';
  * - Se vazio (""), não envia os dados para a API/backend;
  */
 // const apiLogoutEndpoint = '/user/logout'; // Exemplo
-const apiLogoutEndpoint = '';
+const apiLogoutEndpoint = '/owner/logout';
 
 /**
  * Configuração: URL / rota da página inicial do aplicativo
@@ -51,7 +51,7 @@ const apiLogoutEndpoint = '';
  * - Se vazio, não faz nada
  */
 // const redirectOnLogout = 'index.html'
-// const redirectOnLogout = '/'
+// const redirectOnLogout = ''
 const redirectOnLogout = '/'
 
 /**
@@ -104,7 +104,7 @@ const googleLogout = async () => {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json', },
-                    body: JSON.stringify({ action: "logout", redirectTo: "redirectOnLogout" })
+                    body: JSON.stringify({ action: "logout", redirectTo: redirectOnLogout })
                 });
 
                 backendLogoutSuccess = response.ok;
@@ -163,7 +163,7 @@ const updateUI = (user) => {
         // Usuário LOGADO: Mostra o Avatar
 
         // Atualiza o elemento <img> com o avatar do usuário (photoURL)
-        const avatarImg = `<img src="${user.photoURL || '	/static/img/user.png'}" alt="${user.displayName || 'Avatar do Usuário'}" class="rounded-circle avatar-sm" referrerpolicy="no-referrer">`;
+        const avatarImg = `<img src="${user.photoURL || '/static/img/user.png'}" alt="${user.displayName || 'Avatar do Usuário'}" class="rounded-circle avatar-sm" referrerpolicy="no-referrer">`;
 
         // Atualiza o elemento <span> com nome do usuário (displayName)
         const loginSpan = `<span class="d-md-none ms-3">${user.displayName || 'Usuário logado'}</span>`;
@@ -197,7 +197,7 @@ const updateUI = (user) => {
         // Usuário DESLOGADO: Mostra a imagem padrão
 
         // Cria o elemento <img> (ícone)
-        const icon = `<img src="	/static/img/user.png" alt="Logue-se com o Google" class="rounded-circle avatar-sm">`;
+        const icon = `<img src="/static/img/user.png" alt="Logue-se com o Google" class="rounded-circle avatar-sm">`;
 
         // Cria o elemento <span>
         const loginSpan = `<span class="d-md-none ms-3">Login com Google</span>`;

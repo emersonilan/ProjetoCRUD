@@ -19,4 +19,6 @@ DB = {
 }
 
 # Configurações dos cookies
-COOKIE = {}
+COOKIE = {
+    'livedays' : 30,
+}
