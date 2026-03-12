@@ -11,15 +11,24 @@ from pages.login import login_bp
 from pages.newpad import newpad_bp
 from pages.search import search_bp
 from pages.owner import owner_bp
-from pages.view import view_bp
-
 from utils.filters import format_datetime_br
+from pages.view import view_bp
+from pages.delete import delete_bp
 
+# Cria o objeto do Fask
 app = Flask(__name__)
 
+
+# Quando o aplicativo iniciar cria o banco de dados e as tabelas,
+# mas somente se as estruturas não existem
 init_db()
 
+# Formata datas usando o filtro em utils.filter
 app.jinja_env.filters["datetime_br"] = format_datetime_br
+
+# Injeta "secret key"
+app.secret_key = APP['secret_key']
+
 
 @app.context_processor
 def inject_globals():
@@ -37,6 +46,7 @@ app.register_blueprint(newpad_bp)
 app.register_blueprint(search_bp)
 app.register_blueprint(owner_bp)
 app.register_blueprint(view_bp)
+app.register_blueprint(delete_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
