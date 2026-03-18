@@ -1,9 +1,11 @@
 # pages/owner.py
 
+from utils.auth import login_required
 import sqlite3
 from flask import Blueprint, g, make_response, redirect, render_template, request, jsonify, url_for
 from config import COOKIE, DB
-from utils.auth import login_required
+from utils._debug import _debug
+from utils.auth import get_user_by_uid, login_required
 
 owner_bp = Blueprint('owner', __name__, url_prefix='/owner')
 
@@ -133,4 +135,40 @@ def owner_profile():
         page_title=page_title,
         userdata=userdata,
         all_pads=all_pads,
-    )
+    )  # pages/owner.py
+
+
+@owner_bp.route('/pads/<string:uid>')
+def ownerpads_page(uid):
+    # Exibe uma página com todos os pads do usuário identificado pelo uid
+
+    user_data = get_user_by_uid(uid)
+    if not user_data:
+        return redirect(url_for("home.home_page"))
+    owner = dict(user_data)
+
+    with sqlite3.connect(DB["name"]) as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        # Obtém todos os pads ativos de um owner específico
+        cursor.execute(
+            """
+            SELECT
+                pad_id, pad_created_at, pad_title, pad_is_markdown,
+                SUBSTR(pad_content, 1, 120) || '...' AS pad_content_preview
+            FROM pads
+                WHERE pad_owner = ?
+                    AND pad_status = 'ON'
+                ORDER BY pad_created_at DESC;
+            """,
+            (user_data['own_uid'],)
+        )
+        rows = cursor.fetchall()
+        pads = [dict(row) for row in rows]
+        total = len(pads)
+
+        # Debug das variáveis usando `_debug()`
+        _debug(owner, pads)
+
+    return render_template('pads.html', owner=user_data, pads=pads, total=total)
